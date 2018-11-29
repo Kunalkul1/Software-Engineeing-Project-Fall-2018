@@ -1,0 +1,123 @@
+import requests
+from dateutil.parser import parse
+
+
+def getResponse(url):
+    response = requests.get(url)
+    jsonResponse = response.json()
+    return jsonResponse
+
+
+def getAngularCommitActivity():
+    url = "https://api.github.com/repos/angular/angular.js/stats/commit_activity"
+    jsonResponse = getResponse(url)
+    print "week_number	total_weekly_commits  dayofWeekCommit"
+    for eachActivity in jsonResponse:
+        print str(eachActivity['week']) + '        ' + str(eachActivity['total']) + '                ' + str(
+            eachActivity['days'])
+
+    return
+
+
+def getAngularContributors():
+    url = "https://api.github.com/repos/angular/angular.js/stats/contributors"
+    jsonResponse = getResponse(url)
+    listOfAngularContributors = []
+    for a in jsonResponse:
+        listOfAngularContributors.append([a['author']['login'], a['total']])
+
+    sorted(listOfAngularContributors, key=getSecond, reverse=True)
+    print "Top 5 contributors in this project are: "
+    for i in range(0, 5):
+        a = listOfAngularContributors[i]
+        print a[0] + "\t" + str(a[1])
+
+    print "Total no of contributors are :", listOfAngularContributors.__sizeof__()
+    return
+
+
+def getSecond(self):
+    return self[1]
+
+
+def getAvgBugLifeTimeForAngular():
+    url = "https://api.github.com/repos/angular/angular.js/issues?state=all"
+    jsonResponse = getResponse(url)
+    totalTime = 0
+    count = 0
+    for jsonObj in jsonResponse:
+        if (jsonObj['state'] == 'closed'):
+            count += 1
+            close_time = parse(jsonObj['closed_at'])
+            open_time = parse(jsonObj['created_at'])
+            totalTime += (close_time - open_time).seconds
+
+    avgTimeTaken = 0
+    if (count != 0):
+        avgTimeTaken = float(float(totalTime / count) / 60)
+        print ("Average Bug life time for Angular js is: " + str(avgTimeTaken) + " minutes")
+
+
+def getBootstrapCommitActivity():
+    url = "https://api.github.com/repos/twbs/bootstrap/stats/commit_activity"
+    jsonResponse = getResponse(url)
+    print "week_number	total_weekly_commits  dayofWeekCommit"
+    for eachActivity in jsonResponse:
+        print str(eachActivity['week']) + '        ' + str(eachActivity['total']) + '                ' + str(
+            eachActivity['days'])
+
+    return
+
+
+def getBootstrapContributors():
+    url = "https://api.github.com/repos/twbs/bootstrap/stats/contributors"
+    jsonResponse = getResponse(url)
+    listOfBootstrapContributors = []
+    for a in jsonResponse:
+        listOfBootstrapContributors.append([a['author']['login'], a['total']])
+
+    sorted(listOfBootstrapContributors, key=getSecond, reverse=True)
+    print "Top 5 contributors in this project are: "
+    for i in range(0, 5):
+        a = listOfBootstrapContributors[i]
+        print a[0] + "\t" + str(a[1])
+
+    print "Total no of contributors are :", listOfBootstrapContributors.__sizeof__()
+    return
+
+
+def getAvgBugLifeTimeForBootstrap():
+    url = "https://api.github.com/repos/twbs/bootstrap/issues?state=all"
+    jsonResponse = getResponse(url)
+    totalTime = 0
+    count = 0
+    for jsonObj in jsonResponse:
+        if (jsonObj['state'] == 'closed'):
+            count += 1
+            close_time = parse(jsonObj['closed_at'])
+            open_time = parse(jsonObj['created_at'])
+            totalTime += (close_time - open_time).seconds
+
+    avgTimeTaken = 0
+    if (count != 0):
+        avgTimeTaken = float(float(totalTime / count) / 60)
+        print ("Average Bug life time for Angular js is: " + str(avgTimeTaken) + " minutes")
+
+
+print "Reports for Angular"
+print "--------------------------------"
+getAngularCommitActivity()
+print "--------------------------------"
+getAngularContributors()
+print "--------------------------------"
+getAvgBugLifeTimeForAngular()
+print "--------------------------------"
+
+print "\n\n\n\n\n\n"
+print "Reports for Bootstrap"
+print "--------------------------------"
+getBootstrapCommitActivity()
+print "--------------------------------"
+getBootstrapContributors()
+print "--------------------------------"
+getAvgBugLifeTimeForBootstrap()
