@@ -15,6 +15,8 @@ The directories in the repo are:
 Other files in the repo are:
 1. AllResults.pdf - contains a tabular form of actual analysis results with side to side comparison for both projects under observation
 2. Survey Responses.pdf - contains all the responses received as part of a survey carried out to study the target audience priorities and preferences as well as opinion towards the projects under observation  
-3. mineRepoActivity.py - script used for GitHub mining and StackExchange mining
+3. mineRepoActivity.py - script used for GitHub mining and StackExchange mining  
+4. r_udokuj.pdf - final report for the project  
+5. Final presentation.pptx - final presentation for the project
 
 Screenshots of our results are present [here](https://github.com/Kunalkul1/Software-Engineering-Project-Fall-2018/tree/master/output/screenshot)
